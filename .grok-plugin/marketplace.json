@@ -1,0 +1,51 @@
+{
+  "name": "ximing-grok-plugins",
+  "description": "ximing's Grok plugins. Skills are vendored from their source repos; this catalog is generated, not hand-edited.",
+  "owner": {
+    "name": "ximing",
+    "url": "https://github.com/ximing"
+  },
+  "plugins": [
+    {
+      "name": "rab",
+      "description": "RAB skills for coding agents: rab-react (@rabjs/react conventions), rab-cdp-debug (CDP debugging of live rab apps), rab-rn-debug (React Native debug bridge)",
+      "category": "development",
+      "source": {
+        "type": "local",
+        "path": "./plugins/rab"
+      },
+      "homepage": "https://github.com/ximing/rab",
+      "keywords": [
+        "rab",
+        "rabjs",
+        "rab react",
+        "rabjs react",
+        "rab debug"
+      ],
+      "domains": [
+        "ximing.github.io"
+      ],
+      "version": "9.0.0"
+    },
+    {
+      "name": "csi",
+      "description": "CSI skills for coding agents: csi (drive the user's real Chrome browser — navigate, click, type, screenshot, save PDF — via the local daemon), csi-e2e (turn natural-language browser scenarios into replayable e2e regression suites)",
+      "category": "development",
+      "source": {
+        "type": "local",
+        "path": "./plugins/csi"
+      },
+      "homepage": "https://github.com/ximing/csi",
+      "keywords": [
+        "csi",
+        "csi browser",
+        "csi chrome",
+        "csi e2e"
+      ],
+      "domains": [
+        "github.com/ximing/csi"
+      ],
+      "version": "0.7.3"
+    }
+  ]
+}

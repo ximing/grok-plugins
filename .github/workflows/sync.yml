@@ -1,0 +1,83 @@
+name: Sync plugins
+
+# Canonical job: pull skills from upstream repos and commit them here.
+# Triggered by:
+#   - source-repo notify workflows (repository_dispatch)
+#   - manual run
+#   - 30-minute cron as a safety net if a notify is missed
+on:
+  repository_dispatch:
+    types: [sync-plugins]
+  workflow_dispatch:
+    inputs:
+      plugin:
+        description: "Plugin name to sync (empty = all)"
+        required: false
+        default: ""
+  schedule:
+    - cron: "*/30 * * * *"
+
+concurrency:
+  group: sync-plugins
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Resolve plugin filter
+        id: filter
+        env:
+          DISPATCH_PLUGIN: ${{ github.event.client_payload.plugin }}
+          INPUT_PLUGIN: ${{ inputs.plugin }}
+        run: |
+          plugin="${INPUT_PLUGIN:-}"
+          if [ -z "$plugin" ]; then
+            plugin="${DISPATCH_PLUGIN:-}"
+          fi
+          echo "plugin=$plugin" >> "$GITHUB_OUTPUT"
+
+      - name: Sync from upstream
+        run: |
+          if [ -n "${{ steps.filter.outputs.plugin }}" ]; then
+            python3 scripts/sync.py --only "${{ steps.filter.outputs.plugin }}"
+          else
+            python3 scripts/sync.py
+          fi
+
+      - name: Commit and push if the tree changed
+        run: |
+          git config user.name "grok-plugins-sync"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add plugins .grok-plugin
+          if git diff --cached --quiet; then
+            echo "No plugin changes"
+            exit 0
+          fi
+          plugin="${{ steps.filter.outputs.plugin }}"
+          if [ -n "$plugin" ]; then
+            msg="sync(${plugin}): refresh vendored skills"
+          else
+            msg="sync: refresh vendored skills"
+          fi
+          git commit -m "$msg"
+          for i in 1 2 3; do
+            git pull --rebase origin HEAD || true
+            if git push; then
+              exit 0
+            fi
+            sleep $((i * 3))
+          done
+          echo "push failed after retries" >&2
+          exit 1

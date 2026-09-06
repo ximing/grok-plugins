@@ -1,0 +1,30 @@
+{
+  "marketplace": {
+    "name": "ximing-grok-plugins",
+    "description": "ximing's Grok plugins. Skills are vendored from their source repos; this catalog is generated, not hand-edited.",
+    "owner": {
+      "name": "ximing",
+      "url": "https://github.com/ximing"
+    }
+  },
+  "plugins": [
+    {
+      "name": "rab",
+      "repo": "ximing/rab",
+      "ref": "master",
+      "category": "development",
+      "homepage": "https://github.com/ximing/rab",
+      "keywords": ["rab", "rabjs", "rab react", "rabjs react", "rab debug"],
+      "domains": ["ximing.github.io"]
+    },
+    {
+      "name": "csi",
+      "repo": "ximing/csi",
+      "ref": "master",
+      "category": "development",
+      "homepage": "https://github.com/ximing/csi",
+      "keywords": ["csi", "csi browser", "csi chrome", "csi e2e"],
+      "domains": ["github.com/ximing/csi"]
+    }
+  ]
+}
