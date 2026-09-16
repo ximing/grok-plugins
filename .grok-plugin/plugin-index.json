@@ -2,8 +2,8 @@
   "version": 1,
   "plugins": {
     "csi": {
-      "sha": "af1e323af93d211faec638bd1140c853a3b43be0",
-      "version": "0.7.3",
+      "sha": "8dfa94984ba546acd67a21db18de42705c8331eb",
+      "version": "0.7.4",
       "components": {
         "skills": [
           {
