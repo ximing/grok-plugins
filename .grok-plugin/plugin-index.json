@@ -2,7 +2,7 @@
   "version": 1,
   "plugins": {
     "csi": {
-      "sha": "8dfa94984ba546acd67a21db18de42705c8331eb",
+      "sha": "83c5a00fbc5363b886f36634048d0a470473e4ca",
       "version": "0.7.4",
       "components": {
         "skills": [
