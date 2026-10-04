@@ -48,6 +48,18 @@
           }
         ]
       }
+    },
+    "vital": {
+      "sha": "76fd607d6a42f43515aea1a34c9ca352fd1d631f",
+      "version": "0.1.0",
+      "components": {
+        "skills": [
+          {
+            "name": "vital",
+            "description": "Operate the user's Vital personal OS (today, inbox, tasks, threads, habits, days, lists, tags, reports, search) through…"
+          }
+        ]
+      }
     }
   }
 }

@@ -9,6 +9,7 @@ Skills are **vendored** here from their source repositories. You do not edit fil
 | `rab` | [ximing/rab](https://github.com/ximing/rab) | `rab-react`, `rab-cdp-debug`, `rab-rn-debug` |
 | `csi` | [ximing/csi](https://github.com/ximing/csi) | `csi`, `csi-e2e` |
 | `inwit` | [ximing/inwit](https://github.com/ximing/inwit) | `inwit` |
+| `vital` | [ximing/vital](https://github.com/ximing/vital) | `vital` |
 
 ## Install
 
@@ -17,6 +18,7 @@ grok plugin marketplace add ximing/grok-plugins
 grok plugin install rab --trust
 grok plugin install csi --trust
 grok plugin install inwit --trust
+grok plugin install vital --trust
 ```
 
 Or pin it in `~/.grok/config.toml`:
@@ -27,7 +29,7 @@ name = "ximing"
 git = "https://github.com/ximing/grok-plugins.git"
 
 [plugins]
-enabled = ["rab", "csi", "inwit"]
+enabled = ["rab", "csi", "inwit", "vital"]
 ```
 
 Then `grok plugin marketplace update` / `grok plugin update` picks up new skill copies.
@@ -38,6 +40,7 @@ Then `grok plugin marketplace update` / `grok plugin update` picks up new skill 
 ximing/rab    --skills change-->  GitHub Action  --deploy key-->  this repo
 ximing/csi    --skills change-->  GitHub Action  --deploy key-->  this repo
 ximing/inwit  --skills change-->  GitHub Action  --deploy key-->  this repo
+ximing/vital  --skills change-->  GitHub Action  --deploy key-->  this repo
 this repo     --every 30 min--->  scripts/sync.py clones upstreams (safety net)
 ```
 
@@ -58,7 +61,7 @@ this repo     --every 30 min--->  scripts/sync.py clones upstreams (safety net)
 Local dry-run from this checkout:
 
 ```bash
-python3 scripts/sync.py --local-map rab=~/project/mygithub/rab,csi=~/project/mygithub/csi,inwit=~/project/mygithub/inwit
+python3 scripts/sync.py --local-map rab=~/project/mygithub/rab,csi=~/project/mygithub/csi,inwit=~/project/mygithub/inwit,vital=~/project/mygithub/vital
 python3 scripts/validate.py
 ```
 
@@ -73,6 +76,7 @@ scripts/validate.py
 plugins/rab/                 # generated
 plugins/csi/                 # generated
 plugins/inwit/               # generated
+plugins/vital/               # generated
 ```
 
-Vendored plugin payloads keep their upstream license (`plugins/rab` is MIT, `plugins/csi` is PolyForm Noncommercial, `plugins/inwit` is AGPL-3.0). The scaffolding in this repository is MIT.
+Vendored plugin payloads keep their upstream license (`plugins/rab` is MIT, `plugins/csi` is PolyForm Noncommercial, `plugins/inwit` is AGPL-3.0). `plugins/vital` has no `LICENSE` file because [ximing/vital](https://github.com/ximing/vital) does not ship one. The scaffolding in this repository is MIT.

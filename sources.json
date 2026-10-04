@@ -34,6 +34,15 @@
       "homepage": "https://github.com/ximing/inwit",
       "keywords": ["inwit", "inwit skill", "spaced repetition", "notes", "review"],
       "domains": ["inwit.aimo.plus"]
+    },
+    {
+      "name": "vital",
+      "repo": "ximing/vital",
+      "ref": "main",
+      "category": "development",
+      "homepage": "https://github.com/ximing/vital",
+      "keywords": ["vital", "vital skill", "inbox", "tasks", "habits"],
+      "domains": ["vital.aimo.plus"]
     }
   ]
 }

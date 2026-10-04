@@ -67,6 +67,27 @@
         "inwit.aimo.plus"
       ],
       "version": "0.1.3"
+    },
+    {
+      "name": "vital",
+      "description": "Operate the user's Vital personal OS (inbox, tasks, threads, habits, days, reports) through its HTTP API with a personal access token.",
+      "category": "development",
+      "source": {
+        "type": "local",
+        "path": "./plugins/vital"
+      },
+      "homepage": "https://github.com/ximing/vital",
+      "keywords": [
+        "vital",
+        "vital skill",
+        "inbox",
+        "tasks",
+        "habits"
+      ],
+      "domains": [
+        "vital.aimo.plus"
+      ],
+      "version": "0.1.0"
     }
   ]
 }
