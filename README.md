@@ -8,6 +8,7 @@ Skills are **vendored** here from their source repositories. You do not edit fil
 | --- | --- | --- |
 | `rab` | [ximing/rab](https://github.com/ximing/rab) | `rab-react`, `rab-cdp-debug`, `rab-rn-debug` |
 | `csi` | [ximing/csi](https://github.com/ximing/csi) | `csi`, `csi-e2e` |
+| `inwit` | [ximing/inwit](https://github.com/ximing/inwit) | `inwit` |
 
 ## Install
 
@@ -15,6 +16,7 @@ Skills are **vendored** here from their source repositories. You do not edit fil
 grok plugin marketplace add ximing/grok-plugins
 grok plugin install rab --trust
 grok plugin install csi --trust
+grok plugin install inwit --trust
 ```
 
 Or pin it in `~/.grok/config.toml`:
@@ -25,7 +27,7 @@ name = "ximing"
 git = "https://github.com/ximing/grok-plugins.git"
 
 [plugins]
-enabled = ["rab", "csi"]
+enabled = ["rab", "csi", "inwit"]
 ```
 
 Then `grok plugin marketplace update` / `grok plugin update` picks up new skill copies.
@@ -33,9 +35,10 @@ Then `grok plugin marketplace update` / `grok plugin update` picks up new skill 
 ## How sync works
 
 ```
-ximing/rab  --skills change-->  GitHub Action  --deploy key-->  this repo
-ximing/csi  --skills change-->  GitHub Action  --deploy key-->  this repo
-this repo   --every 30 min--->  scripts/sync.py clones upstreams (safety net)
+ximing/rab    --skills change-->  GitHub Action  --deploy key-->  this repo
+ximing/csi    --skills change-->  GitHub Action  --deploy key-->  this repo
+ximing/inwit  --skills change-->  GitHub Action  --deploy key-->  this repo
+this repo     --every 30 min--->  scripts/sync.py clones upstreams (safety net)
 ```
 
 1. `sources.json` lists each plugin and its GitHub repo. **This is the only file you edit to add a plugin.**
@@ -55,7 +58,7 @@ this repo   --every 30 min--->  scripts/sync.py clones upstreams (safety net)
 Local dry-run from this checkout:
 
 ```bash
-python3 scripts/sync.py --local-map rab=~/project/mygithub/rab,csi=~/project/mygithub/csi
+python3 scripts/sync.py --local-map rab=~/project/mygithub/rab,csi=~/project/mygithub/csi,inwit=~/project/mygithub/inwit
 python3 scripts/validate.py
 ```
 
@@ -69,6 +72,7 @@ scripts/validate.py
 .grok-plugin/plugin-index.json
 plugins/rab/                 # generated
 plugins/csi/                 # generated
+plugins/inwit/               # generated
 ```
 
-Vendored plugin payloads keep their upstream license (`plugins/rab` is MIT, `plugins/csi` is PolyForm Noncommercial). The scaffolding in this repository is MIT.
+Vendored plugin payloads keep their upstream license (`plugins/rab` is MIT, `plugins/csi` is PolyForm Noncommercial, `plugins/inwit` is AGPL-3.0). The scaffolding in this repository is MIT.

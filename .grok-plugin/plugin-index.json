@@ -17,6 +17,18 @@
         ]
       }
     },
+    "inwit": {
+      "sha": "7351724cecc8ca99834b726b083c98e23450112e",
+      "version": "0.1.3",
+      "components": {
+        "skills": [
+          {
+            "name": "inwit",
+            "description": "Operate the Inwit learning app over HTTP: capture notes, create documents, chat-to-cards, review queues, search, topics…"
+          }
+        ]
+      }
+    },
     "rab": {
       "sha": "8bfdd0bc1bcd46a71baee0a07890dae3674be897",
       "version": "9.0.0",

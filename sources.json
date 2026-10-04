@@ -25,6 +25,15 @@
       "homepage": "https://github.com/ximing/csi",
       "keywords": ["csi", "csi browser", "csi chrome", "csi e2e"],
       "domains": ["github.com/ximing/csi"]
+    },
+    {
+      "name": "inwit",
+      "repo": "ximing/inwit",
+      "ref": "master",
+      "category": "development",
+      "homepage": "https://github.com/ximing/inwit",
+      "keywords": ["inwit", "inwit skill", "spaced repetition", "notes", "review"],
+      "domains": ["inwit.aimo.plus"]
     }
   ]
 }

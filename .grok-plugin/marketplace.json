@@ -46,6 +46,27 @@
         "github.com/ximing/csi"
       ],
       "version": "0.9.0"
+    },
+    {
+      "name": "inwit",
+      "description": "Inwit skill for coding agents: throw notes, questions, and clips into the user's Inwit instance over HTTP (PAT). The app still digests, reviews, and maintains the knowledge map.",
+      "category": "development",
+      "source": {
+        "type": "local",
+        "path": "./plugins/inwit"
+      },
+      "homepage": "https://github.com/ximing/inwit",
+      "keywords": [
+        "inwit",
+        "inwit skill",
+        "spaced repetition",
+        "notes",
+        "review"
+      ],
+      "domains": [
+        "inwit.aimo.plus"
+      ],
+      "version": "0.1.3"
     }
   ]
 }
