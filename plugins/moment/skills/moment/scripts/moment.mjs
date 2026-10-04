@@ -4,7 +4,7 @@
  * Endpoint shapes come from skills/moment/references/api.json — do not invent paths.
  *
  *   MOMENT_BASE_URL   optional, default http://localhost:3000
- *   MOMENT_TOKEN      mmt_ token from 我 → 接口令牌
+ *   MOMENT_TOKEN      mmt_ token from 设置 → 接口令牌
  *   MOMENT_BA_TOKEN   internal auth=ba routes only
  */
 import { existsSync, readFileSync } from "node:fs";
@@ -25,7 +25,7 @@ function usage(exit = 1) {
 
 Env:
   MOMENT_BASE_URL   default http://localhost:3000
-  MOMENT_TOKEN      personal access token (mmt_) from 我 → 接口令牌
+  MOMENT_TOKEN      personal access token (mmt_) from 设置 → 接口令牌
   MOMENT_BA_TOKEN   auth=ba routes only
 `);
   process.exit(exit);
@@ -236,7 +236,7 @@ function authHeader(ep) {
   if (!token) {
     if (ep.auth === "optional") return undefined;
     console.error(
-      "No MOMENT_TOKEN. Create one in Moment under 我 → 接口令牌, then export MOMENT_TOKEN='mmt_…'.",
+      "No MOMENT_TOKEN. Create one in Moment under 设置 → 接口令牌, then export MOMENT_TOKEN='mmt_…'.",
     );
     console.error(
       "Do not paste the token into chat. MOMENT_BASE_URL defaults to http://localhost:3000.",

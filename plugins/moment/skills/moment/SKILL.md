@@ -24,7 +24,7 @@ export MOMENT_BASE_URL="${MOMENT_BASE_URL:-http://localhost:3000}"
 node "$SKILL_DIR/scripts/moment.mjs" call GET /api/auth/me
 ```
 
-`MOMENT_TOKEN` 必须已在环境里。没有时让用户在 Moment 网页「我」页的「接口令牌」里生成一枚，并在 shell 里 `export MOMENT_TOKEN='mmt_…'`。不要向用户要邮箱或密码，不要把令牌写进仓库、shell 配置或回复。
+`MOMENT_TOKEN` 必须已在环境里。没有时让用户在 Moment 网页「设置」→「接口令牌」里生成一枚，并在 shell 里 `export MOMENT_TOKEN='mmt_…'`。不要向用户要邮箱或密码，不要把令牌写进仓库、shell 配置或回复。
 
 需要 body / query 时：按意图 **Read 下表中的一个 md**，或 `show METHOD PATH`。
 
@@ -99,7 +99,7 @@ Query：`--query chain_ids=<uuid> --query limit=20`。Feed 的查询参数是 sn
 ## 约束
 
 - 删除链、时刻、评论、标签、人物、分享链接、模板、助手线程，吊销接口令牌，转让链，改角色，改密码，退出登录，重新生成回顾：先说明影响，得到用户确认再调用。
-- 时刻和评论是软删除。改密码会吊销全部接口令牌，当前 `MOMENT_TOKEN` 随之失效。用户需要在网页「我」页重新生成，并更新环境变量。退出登录只影响网页会话，不吊销接口令牌。
+- 时刻和评论是软删除。改密码会吊销全部接口令牌，当前 `MOMENT_TOKEN` 随之失效。用户需要在网页「设置」→「接口令牌」重新生成，并更新环境变量。退出登录只影响网页会话，不吊销接口令牌。
 - 错误体是 `{"error":{"code":"…","message":"…","details":…}}`。把 `code` 和 `message` 告诉用户。
 - 非成员访问链内资源得到 `CHAIN_NOT_FOUND`。角色不够是 `CHAIN_ROLE_INSUFFICIENT`。
 - 模板在创建链时确定。更新链时 body 里放 `template` 会得到 `TEMPLATE_IMMUTABLE`。
