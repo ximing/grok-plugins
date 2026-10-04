@@ -29,6 +29,18 @@
         ]
       }
     },
+    "moment": {
+      "sha": "8c2ebe0575def63917855e3d5b288ffc756b70c5",
+      "version": "0.1.0",
+      "components": {
+        "skills": [
+          {
+            "name": "moment",
+            "description": "Operate Moment, the family timeline, over HTTP: chains, moments, feed, comments, media, share links, search, and monthl…"
+          }
+        ]
+      }
+    },
     "rab": {
       "sha": "8bfdd0bc1bcd46a71baee0a07890dae3674be897",
       "version": "9.0.0",

@@ -1,0 +1,17 @@
+{
+  "name": "moment",
+  "version": "0.1.0",
+  "description": "Moment skill for coding agents: record chains, moments, feed, media, share links, and monthly recaps over HTTP with a personal access token.",
+  "author": {
+    "name": "ximing"
+  },
+  "homepage": "https://github.com/ximing/moment",
+  "repository": "https://github.com/ximing/moment",
+  "keywords": [
+    "moment",
+    "skills",
+    "timeline",
+    "family",
+    "recaps"
+  ]
+}

@@ -1,0 +1,2385 @@
+{
+  "generatedAt": "2026-10-04T08:24:01.077Z",
+  "modules": [
+    {
+      "id": "health",
+      "title": "健康检查",
+      "count": 1
+    },
+    {
+      "id": "account",
+      "title": "账号、通知与设备",
+      "count": 13
+    },
+    {
+      "id": "chains",
+      "title": "时光链与邀请",
+      "count": 14
+    },
+    {
+      "id": "moments",
+      "title": "时刻",
+      "count": 5
+    },
+    {
+      "id": "feed",
+      "title": "时间线与那年今日",
+      "count": 3
+    },
+    {
+      "id": "social",
+      "title": "评论与表情",
+      "count": 5
+    },
+    {
+      "id": "people",
+      "title": "标签与人物",
+      "count": 7
+    },
+    {
+      "id": "media",
+      "title": "媒体",
+      "count": 6
+    },
+    {
+      "id": "share",
+      "title": "分享",
+      "count": 4
+    },
+    {
+      "id": "templates",
+      "title": "模板与聚合",
+      "count": 6
+    },
+    {
+      "id": "recaps",
+      "title": "月度回顾",
+      "count": 3
+    },
+    {
+      "id": "search",
+      "title": "搜索",
+      "count": 1
+    },
+    {
+      "id": "jobs",
+      "title": "链上任务",
+      "count": 1
+    },
+    {
+      "id": "geocode",
+      "title": "逆地理",
+      "count": 1
+    },
+    {
+      "id": "agent",
+      "title": "助手",
+      "count": 5
+    },
+    {
+      "id": "internal",
+      "title": "内部向量",
+      "count": 2
+    }
+  ],
+  "endpoints": [
+    {
+      "method": "GET",
+      "path": "/api/agent/threads",
+      "module": "agent",
+      "auth": "bearer",
+      "status": []
+    },
+    {
+      "method": "POST",
+      "path": "/api/agent/threads",
+      "module": "agent",
+      "auth": "bearer",
+      "status": [
+        201
+      ],
+      "body": {
+        "name": "createAgentThreadInputSchema",
+        "origin": "dto",
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/agent/threads/:id",
+      "module": "agent",
+      "auth": "bearer",
+      "status": [
+        204
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/agent/threads/:id",
+      "module": "agent",
+      "auth": "bearer",
+      "status": []
+    },
+    {
+      "method": "POST",
+      "path": "/api/agent/threads/:id/turns",
+      "module": "agent",
+      "auth": "bearer",
+      "status": [],
+      "comment": "发送不走 routing-controllers：它的成功处理会在写出响应后再 next()，SSE 容易被包成 JSON。 挂在 populateUser 之后、useExpressServer 之前。限流与处理函数在同一次 app.post 上。",
+      "stream": true,
+      "body": {
+        "name": "postAgentTurnInputSchema",
+        "origin": "dto",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "content": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2000
+            },
+            "context": {
+              "type": "object",
+              "properties": {
+                "chainId": {
+                  "type": "string",
+                  "format": "uuid",
+                  "optional": true
+                },
+                "momentId": {
+                  "type": "string",
+                  "format": "uuid",
+                  "optional": true
+                }
+              },
+              "additionalProperties": false,
+              "optional": true
+            }
+          },
+          "required": [
+            "content"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/api/auth/change-password",
+      "module": "account",
+      "auth": "bearer",
+      "status": [
+        204
+      ],
+      "comment": "改密即全端下线：passwordChangedAt 使旧 access token 失效，并吊销全部 refresh token 和接口令牌。",
+      "body": {
+        "name": "changePasswordInputSchema",
+        "origin": "dto",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "oldPassword": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 72
+            },
+            "newPassword": {
+              "type": "string",
+              "minLength": 8,
+              "maxLength": 72
+            }
+          },
+          "required": [
+            "oldPassword",
+            "newPassword"
+          ]
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/api/auth/login",
+      "module": "account",
+      "auth": "none",
+      "status": [],
+      "body": {
+        "name": "loginInputSchema",
+        "origin": "dto",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "email": {
+              "type": "string",
+              "format": "email",
+              "maxLength": 255
+            },
+            "password": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 72
+            }
+          },
+          "required": [
+            "email",
+            "password"
+          ]
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/api/auth/logout",
+      "module": "account",
+      "auth": "none",
+      "status": [
+        204
+      ],
+      "body": {
+        "name": "refreshInputSchema",
+        "origin": "dto",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "refreshToken": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "refreshToken"
+          ]
+        }
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/auth/me",
+      "module": "account",
+      "auth": "bearer",
+      "status": []
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/auth/me",
+      "module": "account",
+      "auth": "bearer",
+      "status": [],
+      "body": {
+        "name": "updateMeInputSchema",
+        "origin": "dto",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "nickname": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 50,
+              "optional": true
+            },
+            "avatarColor": {
+              "type": "string",
+              "enum": [
+                "coral",
+                "orange",
+                "pink",
+                "mint",
+                "sky",
+                "purple",
+                "cocoa",
+                "gold"
+              ],
+              "optional": true,
+              "nullable": true
+            },
+            "avatarIcon": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 64,
+              "optional": true,
+              "nullable": true,
+              "refined": true
+            },
+            "avatarMediaId": {
+              "type": "string",
+              "format": "uuid",
+              "optional": true,
+              "nullable": true
+            }
+          },
+          "constraints": [
+            "at least one field required"
+          ]
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/api/auth/refresh",
+      "module": "account",
+      "auth": "none",
+      "status": [],
+      "body": {
+        "name": "refreshInputSchema",
+        "origin": "dto",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "refreshToken": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "refreshToken"
+          ]
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/api/auth/register",
+      "module": "account",
+      "auth": "none",
+      "status": [
+        201
+      ],
+      "body": {
+        "name": "registerInputSchema",
+        "origin": "dto",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "email": {
+              "type": "string",
+              "format": "email",
+              "maxLength": 255
+            },
+            "password": {
+              "type": "string",
+              "minLength": 8,
+              "maxLength": 72
+            },
+            "nickname": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 50
+            }
+          },
+          "required": [
+            "email",
+            "password",
+            "nickname"
+          ]
+        }
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/auth/tokens",
+      "module": "account",
+      "auth": "bearer",
+      "status": []
+    },
+    {
+      "method": "POST",
+      "path": "/api/auth/tokens",
+      "module": "account",
+      "auth": "bearer",
+      "status": [
+        201
+      ],
+      "comment": "明文只在这一次响应里返回。之后列表只有 preview。",
+      "body": {
+        "name": "createAccessTokenInputSchema",
+        "origin": "dto",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 64
+            }
+          },
+          "required": [
+            "name"
+          ]
+        }
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/auth/tokens/:id",
+      "module": "account",
+      "auth": "bearer",
+      "status": [
+        204
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/chains",
+      "module": "chains",
+      "auth": "bearer",
+      "status": []
+    },
+    {
+      "method": "POST",
+      "path": "/api/chains",
+      "module": "chains",
+      "auth": "bearer",
+      "status": [
+        201
+      ],
+      "body": {
+        "name": "createChainInputSchema",
+        "origin": "dto",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100
+            },
+            "description": {
+              "type": "string",
+              "maxLength": 2000,
+              "optional": true,
+              "nullable": true
+            },
+            "visibility": {
+              "type": "string",
+              "enum": [
+                "private",
+                "link",
+                "public"
+              ],
+              "optional": true,
+              "default": "private"
+            },
+            "color": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "enum": [
+                    "coral",
+                    "orange",
+                    "pink",
+                    "mint",
+                    "sky",
+                    "purple",
+                    "cocoa",
+                    "gold"
+                  ]
+                },
+                {
+                  "type": "string",
+                  "pattern": "^#[0-9A-Fa-f]{6}$"
+                }
+              ],
+              "optional": true
+            },
+            "icon": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 64,
+              "optional": true,
+              "nullable": true,
+              "refined": true
+            },
+            "avatarMediaId": {
+              "type": "string",
+              "format": "uuid",
+              "optional": true,
+              "nullable": true
+            },
+            "avatarFocus": {
+              "type": "object",
+              "properties": {
+                "x": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "y": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                }
+              },
+              "required": [
+                "x",
+                "y"
+              ],
+              "optional": true,
+              "nullable": true
+            },
+            "coverMediaId": {
+              "type": "string",
+              "format": "uuid",
+              "optional": true,
+              "nullable": true
+            },
+            "coverFocus": {
+              "type": "object",
+              "properties": {
+                "x": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "y": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                }
+              },
+              "required": [
+                "x",
+                "y"
+              ],
+              "optional": true,
+              "nullable": true
+            },
+            "template": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 64
+            },
+            "payload": {
+              "type": "object",
+              "additionalProperties": {},
+              "optional": true,
+              "nullable": true
+            }
+          },
+          "required": [
+            "name",
+            "template"
+          ],
+          "constraints": [
+            "image appearance cannot be combined with color or icon",
+            "avatarFocus requires avatarMediaId",
+            "coverFocus requires coverMediaId"
+          ]
+        }
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/chains/:chainId",
+      "module": "chains",
+      "auth": "bearer",
+      "role": "owner",
+      "status": [
+        204
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/chains/:chainId",
+      "module": "chains",
+      "auth": "bearer",
+      "role": "viewer",
+      "status": []
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/chains/:chainId",
+      "module": "chains",
+      "auth": "bearer",
+      "role": "owner",
+      "status": [],
+      "body": {
+        "name": "updateChainInputSchema",
+        "origin": "dto",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100,
+              "optional": true
+            },
+            "description": {
+              "type": "string",
+              "maxLength": 2000,
+              "optional": true,
+              "nullable": true
+            },
+            "visibility": {
+              "type": "string",
+              "enum": [
+                "private",
+                "link",
+                "public"
+              ],
+              "optional": true
+            },
+            "color": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "enum": [
+                    "coral",
+                    "orange",
+                    "pink",
+                    "mint",
+                    "sky",
+                    "purple",
+                    "cocoa",
+                    "gold"
+                  ]
+                },
+                {
+                  "type": "string",
+                  "pattern": "^#[0-9A-Fa-f]{6}$"
+                }
+              ],
+              "optional": true
+            },
+            "icon": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 64,
+              "optional": true,
+              "nullable": true,
+              "refined": true
+            },
+            "avatarMediaId": {
+              "type": "string",
+              "format": "uuid",
+              "optional": true,
+              "nullable": true
+            },
+            "avatarFocus": {
+              "type": "object",
+              "properties": {
+                "x": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "y": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                }
+              },
+              "required": [
+                "x",
+                "y"
+              ],
+              "optional": true,
+              "nullable": true
+            },
+            "coverMediaId": {
+              "type": "string",
+              "format": "uuid",
+              "optional": true,
+              "nullable": true
+            },
+            "coverFocus": {
+              "type": "object",
+              "properties": {
+                "x": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "y": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                }
+              },
+              "required": [
+                "x",
+                "y"
+              ],
+              "optional": true,
+              "nullable": true
+            },
+            "payload": {
+              "type": "object",
+              "additionalProperties": {},
+              "optional": true,
+              "nullable": true
+            }
+          },
+          "constraints": [
+            "image appearance cannot be combined with color or icon",
+            "avatarFocus cannot accompany null avatarMediaId",
+            "coverFocus cannot accompany null coverMediaId",
+            "at least one field required"
+          ]
+        }
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/chains/:chainId/aggregate",
+      "module": "templates",
+      "auth": "bearer",
+      "role": "viewer",
+      "status": [],
+      "comment": "聚合视图投影（spec §3.2）：viewer 可读（成员资格由中间件保证，无需 CurrentUser）；archived 模板的存量链照常（getByKey 任意 status）。",
+      "query": {
+        "name": "aggregateQuerySchema",
+        "origin": "dto",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "view": {
+              "type": "string",
+              "enum": [
+                "timeline",
+                "curve",
+                "map",
+                "moodline",
+                "milestone-axis"
+              ]
+            },
+            "kind": {
+              "type": "string",
+              "maxLength": 64,
+              "optional": true
+            },
+            "field": {
+              "type": "string",
+              "maxLength": 64,
+              "optional": true
+            }
+          },
+          "required": [
+            "view"
+          ]
+        }
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/chains/:chainId/invites",
+      "module": "chains",
+      "auth": "bearer",
+      "role": "owner",
+      "status": []
+    },
+    {
+      "method": "POST",
+      "path": "/api/chains/:chainId/invites",
+      "module": "chains",
+      "auth": "bearer",
+      "role": "editor",
+      "status": [
+        201
+      ],
+      "body": {
+        "name": "createInviteInputSchema",
+        "origin": "dto",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "email": {
+              "type": "string",
+              "format": "email",
+              "maxLength": 255,
+              "optional": true,
+              "nullable": true
+            },
+            "role": {
+              "type": "string",
+              "enum": [
+                "editor",
+                "viewer"
+              ],
+              "optional": true,
+              "default": "editor"
+            }
+          }
+        }
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/chains/:chainId/jobs",
+      "module": "jobs",
+      "auth": "bearer",
+      "role": "owner",
+      "status": [],
+      "comment": "链内嵌套路由（CONVENTIONS §3.1）；仅 owner（spec fused-retrieval §6.4）",
+      "query": {
+        "name": "chainJobsQuerySchema",
+        "origin": "dto",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "optional": true
+            },
+            "limit": {
+              "type": "integer",
+              "coerced": true,
+              "minimum": 1,
+              "maximum": 50,
+              "optional": true
+            }
+          },
+          "constraints": [
+            "VALIDATION_ERROR"
+          ]
+        }
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/chains/:chainId/members",
+      "module": "chains",
+      "auth": "bearer",
+      "role": "viewer",
+      "status": []
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/chains/:chainId/members/:userId",
+      "module": "chains",
+      "auth": "bearer",
+      "role": "viewer",
+      "status": [
+        204
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/chains/:chainId/members/:userId",
+      "module": "chains",
+      "auth": "bearer",
+      "role": "owner",
+      "status": [],
+      "body": {
+        "name": "updateMemberRoleInputSchema",
+        "origin": "dto",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "role": {
+              "type": "string",
+              "enum": [
+                "editor",
+                "viewer"
+              ]
+            }
+          },
+          "required": [
+            "role"
+          ]
+        }
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/chains/:chainId/moments",
+      "module": "moments",
+      "auth": "bearer",
+      "role": "viewer",
+      "status": [],
+      "comment": "链内嵌套路由（CONVENTIONS §3.1：链内资源一律嵌套）",
+      "query": {
+        "name": "listMomentsQuerySchema",
+        "origin": "dto",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "cursor": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 1024,
+              "optional": true
+            },
+            "limit": {
+              "type": "string",
+              "optional": true
+            },
+            "before": {
+              "type": "string",
+              "minLength": 1,
+              "optional": true,
+              "refined": true
+            },
+            "person_id": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+              "optional": true
+            },
+            "place": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 255,
+              "optional": true
+            },
+            "happened_from": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}(:\\d{2})?(\\.\\d+)?(Z|[+-]\\d{2}:?\\d{2})$",
+              "optional": true,
+              "refined": true
+            },
+            "happened_to": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}(:\\d{2})?(\\.\\d+)?(Z|[+-]\\d{2}:?\\d{2})$",
+              "optional": true,
+              "refined": true
+            }
+          },
+          "constraints": [
+            "VALIDATION_ERROR"
+          ]
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/api/chains/:chainId/moments",
+      "module": "moments",
+      "auth": "bearer",
+      "role": "editor",
+      "status": [
+        201
+      ],
+      "comment": "链内嵌套路由（CONVENTIONS §3.1：链内资源一律嵌套）",
+      "body": {
+        "name": "createMomentInputSchema",
+        "origin": "dto",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": [
+                "text",
+                "media",
+                "video",
+                "voice"
+              ]
+            },
+            "content": {
+              "type": "string",
+              "maxLength": 5000,
+              "optional": true,
+              "default": ""
+            },
+            "happenedAt": {
+              "type": "string",
+              "minLength": 1,
+              "refined": true
+            },
+            "happenedTzOffset": {
+              "type": "integer",
+              "minimum": -840,
+              "maximum": 840
+            },
+            "isBackfill": {
+              "type": "boolean",
+              "optional": true,
+              "default": false
+            },
+            "mediaIds": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "optional": true,
+              "default": []
+            },
+            "posterMediaId": {
+              "type": "string",
+              "minLength": 1,
+              "optional": true
+            },
+            "tagIds": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "maxItems": 20,
+              "optional": true
+            },
+            "personIds": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "maxItems": 20,
+              "optional": true
+            },
+            "place": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 255,
+                  "optional": true
+                },
+                "lat": {
+                  "type": "number",
+                  "minimum": -90,
+                  "maximum": 90,
+                  "optional": true
+                },
+                "lng": {
+                  "type": "number",
+                  "minimum": -180,
+                  "maximum": 180,
+                  "optional": true
+                }
+              },
+              "additionalProperties": false,
+              "optional": true,
+              "nullable": true,
+              "refined": true
+            },
+            "kind": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9-]*$",
+              "maxLength": 64,
+              "optional": true,
+              "default": "standard"
+            },
+            "payload": {
+              "type": "object",
+              "additionalProperties": {},
+              "optional": true,
+              "nullable": true
+            }
+          },
+          "required": [
+            "type",
+            "happenedAt",
+            "happenedTzOffset"
+          ],
+          "constraints": [
+            "CONTENT_REQUIRED",
+            "MEDIA_NOT_ALLOWED",
+            "MEDIA_COUNT_INVALID"
+          ]
+        }
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/chains/:chainId/persons",
+      "module": "people",
+      "auth": "bearer",
+      "role": "viewer",
+      "status": []
+    },
+    {
+      "method": "POST",
+      "path": "/api/chains/:chainId/persons",
+      "module": "people",
+      "auth": "bearer",
+      "role": "editor",
+      "status": [],
+      "comment": "幂等创建（spec §6）：新建 201；名归一化撞 uk_persons_chain_name 返回已存在行 200。 不用 @HttpCode 装饰器——它会在 routing-controllers 的 success handler 里无条件覆盖 状态码；这里经 @Res 手动 set（无 @HttpCode 时框架不再改状态，返回值仍由框架 response.json() 发送，见 ExpressDriver.handleSuccess 源码行为，已在计划偏差 3 核实）。",
+      "body": {
+        "name": "personCreateInputSchema",
+        "origin": "dto",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 50
+            },
+            "userId": {
+              "type": "string",
+              "format": "uuid",
+              "optional": true
+            }
+          },
+          "required": [
+            "name"
+          ]
+        }
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/chains/:chainId/persons/:personId",
+      "module": "people",
+      "auth": "bearer",
+      "role": "editor",
+      "status": [
+        204
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/chains/:chainId/persons/:personId",
+      "module": "people",
+      "auth": "bearer",
+      "role": "editor",
+      "status": [],
+      "body": {
+        "name": "personPatchInputSchema",
+        "origin": "dto",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 50
+            }
+          },
+          "required": [
+            "name"
+          ]
+        }
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/chains/:chainId/recaps",
+      "module": "recaps",
+      "auth": "bearer",
+      "role": "viewer",
+      "status": [],
+      "comment": "链内嵌套路由（CONVENTIONS §3.1：链内资源一律嵌套）"
+    },
+    {
+      "method": "GET",
+      "path": "/api/chains/:chainId/recaps/:period",
+      "module": "recaps",
+      "auth": "bearer",
+      "role": "viewer",
+      "status": [],
+      "comment": "链内嵌套路由（CONVENTIONS §3.1：链内资源一律嵌套）",
+      "params": {
+        "name": "params",
+        "origin": "dto",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "period": {
+              "type": "string",
+              "pattern": "^\\d{4}-(0[1-9]|1[0-2])$"
+            }
+          },
+          "required": [
+            "period"
+          ]
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/api/chains/:chainId/recaps/:period/regenerate",
+      "module": "recaps",
+      "auth": "bearer",
+      "role": "editor",
+      "status": [
+        202
+      ],
+      "comment": "链内嵌套路由（CONVENTIONS §3.1：链内资源一律嵌套）",
+      "params": {
+        "name": "params",
+        "origin": "dto",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "period": {
+              "type": "string",
+              "pattern": "^\\d{4}-(0[1-9]|1[0-2])$"
+            }
+          },
+          "required": [
+            "period"
+          ]
+        }
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/chains/:chainId/share-links",
+      "module": "share",
+      "auth": "bearer",
+      "role": "owner",
+      "status": []
+    },
+    {
+      "method": "POST",
+      "path": "/api/chains/:chainId/share-links",
+      "module": "share",
+      "auth": "bearer",
+      "role": "owner",
+      "status": [
+        201
+      ],
+      "body": {
+        "name": "createShareLinkInputSchema",
+        "origin": "dto",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "expiresAt": {
+              "type": "string",
+              "format": "date-time",
+              "optional": true
+            }
+          }
+        }
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/chains/:chainId/tags",
+      "module": "people",
+      "auth": "bearer",
+      "role": "viewer",
+      "status": []
+    },
+    {
+      "method": "POST",
+      "path": "/api/chains/:chainId/tags",
+      "module": "people",
+      "auth": "bearer",
+      "role": "editor",
+      "status": [
+        201
+      ],
+      "body": {
+        "name": "tagCreateInputSchema",
+        "origin": "dto",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 50
+            }
+          },
+          "required": [
+            "name"
+          ]
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/api/chains/:chainId/transfer",
+      "module": "chains",
+      "auth": "bearer",
+      "role": "owner",
+      "status": [],
+      "body": {
+        "name": "transferChainInputSchema",
+        "origin": "dto",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "userId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 36
+            }
+          },
+          "required": [
+            "userId"
+          ]
+        }
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/api/chains/order",
+      "module": "chains",
+      "auth": "bearer",
+      "status": [
+        204
+      ],
+      "body": {
+        "name": "reorderChainsInputSchema",
+        "origin": "dto",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "chainIds": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 36
+              },
+              "maxItems": 200
+            }
+          },
+          "required": [
+            "chainIds"
+          ]
+        }
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/comments/:id",
+      "module": "social",
+      "auth": "bearer",
+      "status": [
+        204
+      ],
+      "comment": "按 moment id 反查链：service 层 ChainPolicy（CONVENTIONS §3.1）。viewer 即可评论/读取（spec §1）。"
+    },
+    {
+      "method": "POST",
+      "path": "/api/devices/push-token",
+      "module": "account",
+      "auth": "bearer",
+      "status": [
+        204
+      ],
+      "comment": "注册/心跳：expo_token 全局唯一 upsert（同 token 换账号=重新绑定），每次刷新 last_seen_at。 一条 INSERT ... ON DUPLICATE KEY UPDATE——先查后写在并发/双击重复注册时会撞唯一索引（500）。",
+      "body": {
+        "name": "registerPushTokenSchema",
+        "origin": "dto",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "expoToken": {
+              "type": "string",
+              "minLength": 16,
+              "maxLength": 128
+            },
+            "platform": {
+              "type": "string",
+              "enum": [
+                "ios",
+                "android",
+                "web"
+              ]
+            }
+          },
+          "required": [
+            "expoToken",
+            "platform"
+          ]
+        }
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/feed",
+      "module": "feed",
+      "auth": "bearer",
+      "status": [],
+      "query": {
+        "name": "feedQuerySchema",
+        "origin": "dto",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "cursor": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 1024,
+              "optional": true
+            },
+            "chain_ids": {
+              "type": "string",
+              "optional": true,
+              "refined": true
+            },
+            "tag_id": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+              "optional": true
+            },
+            "order": {
+              "type": "string",
+              "enum": [
+                "happened_at",
+                "created_at"
+              ],
+              "optional": true,
+              "default": "happened_at"
+            },
+            "limit": {
+              "type": "integer",
+              "coerced": true,
+              "minimum": 1,
+              "maximum": 50,
+              "optional": true,
+              "default": 20
+            },
+            "before": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}(:\\d{2})?(\\.\\d+)?(Z|[+-]\\d{2}:?\\d{2})$",
+              "optional": true,
+              "refined": true
+            },
+            "person_id": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+              "optional": true
+            },
+            "place": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 255,
+              "optional": true
+            },
+            "happened_from": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}(:\\d{2})?(\\.\\d+)?(Z|[+-]\\d{2}:?\\d{2})$",
+              "optional": true,
+              "refined": true
+            },
+            "happened_to": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}(:\\d{2})?(\\.\\d+)?(Z|[+-]\\d{2}:?\\d{2})$",
+              "optional": true,
+              "refined": true
+            }
+          },
+          "constraints": [
+            "BEFORE_REQUIRES_HAPPENED_AT",
+            "RANGE_REQUIRES_HAPPENED_AT",
+            "VALIDATION_ERROR"
+          ]
+        }
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/feed/month-index",
+      "module": "feed",
+      "auth": "bearer",
+      "status": [],
+      "query": {
+        "name": "monthIndexQuerySchema",
+        "origin": "dto",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "chain_ids": {
+              "type": "string",
+              "optional": true,
+              "refined": true
+            },
+            "tag_id": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+              "optional": true
+            },
+            "tz_offset": {
+              "type": "integer",
+              "coerced": true,
+              "minimum": -840,
+              "maximum": 840
+            }
+          },
+          "required": [
+            "tz_offset"
+          ]
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/api/geocode/reverse",
+      "module": "geocode",
+      "auth": "bearer",
+      "status": [],
+      "body": {
+        "name": "reverseGeocodeInputSchema",
+        "origin": "dto",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "lat": {
+              "type": "number",
+              "minimum": -90,
+              "maximum": 90
+            },
+            "lng": {
+              "type": "number",
+              "minimum": -180,
+              "maximum": 180
+            }
+          },
+          "required": [
+            "lat",
+            "lng"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/health",
+      "module": "health",
+      "auth": "none",
+      "status": []
+    },
+    {
+      "method": "POST",
+      "path": "/api/internal/embeddings",
+      "module": "internal",
+      "auth": "ba",
+      "status": [],
+      "body": {
+        "name": "embeddingUpsertSchema",
+        "origin": "local",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "momentId": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "chainId": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "kind": {
+              "type": "string",
+              "enum": [
+                "moment",
+                "image"
+              ]
+            },
+            "mediaId": {
+              "type": "string",
+              "format": "uuid",
+              "optional": true
+            },
+            "vector": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            },
+            "modelHash": {
+              "type": "string",
+              "minLength": 64,
+              "maxLength": 64
+            }
+          },
+          "required": [
+            "momentId",
+            "chainId",
+            "kind",
+            "vector",
+            "modelHash"
+          ],
+          "constraints": [
+            "VALIDATION_ERROR"
+          ]
+        }
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/internal/embeddings/:momentId",
+      "module": "internal",
+      "auth": "ba",
+      "status": [],
+      "params": {
+        "name": "params",
+        "origin": "local",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "momentId": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          "required": [
+            "momentId"
+          ]
+        }
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/invites/:inviteId",
+      "module": "chains",
+      "auth": "bearer",
+      "status": [
+        204
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/invites/:token/accept",
+      "module": "chains",
+      "auth": "bearer",
+      "status": []
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/media/:id",
+      "module": "media",
+      "auth": "bearer",
+      "status": [
+        204
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/media/:id",
+      "module": "media",
+      "auth": "optional",
+      "status": [
+        302
+      ],
+      "query": {
+        "name": "query",
+        "origin": "mixed",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "st": {
+              "type": "string",
+              "optional": true
+            },
+            "variant": {
+              "type": "string",
+              "enum": [
+                "original",
+                "derived"
+              ],
+              "optional": true
+            }
+          }
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/api/media/:id/abort",
+      "module": "media",
+      "auth": "bearer",
+      "status": [
+        204
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/media/:id/complete",
+      "module": "media",
+      "auth": "bearer",
+      "status": [],
+      "body": {
+        "name": "mediaCompleteInputSchema",
+        "origin": "dto",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "parts": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "partNumber": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 10000
+                  },
+                  "etag": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 255
+                  }
+                },
+                "required": [
+                  "partNumber",
+                  "etag"
+                ]
+              },
+              "maxItems": 10000,
+              "optional": true,
+              "default": []
+            }
+          }
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/api/media/:id/parts",
+      "module": "media",
+      "auth": "bearer",
+      "status": [],
+      "body": {
+        "name": "mediaPartsInputSchema",
+        "origin": "dto",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "partNumbers": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 10000
+              },
+              "minItems": 1,
+              "maxItems": 200
+            }
+          },
+          "required": [
+            "partNumbers"
+          ]
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/api/media/presign",
+      "module": "media",
+      "auth": "bearer",
+      "status": [
+        201
+      ],
+      "body": {
+        "name": "mediaPresignInputSchema",
+        "origin": "dto",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "mime": {
+              "type": "string",
+              "minLength": 3,
+              "maxLength": 100
+            },
+            "size": {
+              "type": "integer",
+              "minimum": 0,
+              "exclusiveMinimum": true
+            },
+            "kind": {
+              "type": "string",
+              "enum": [
+                "image",
+                "video",
+                "audio"
+              ]
+            },
+            "sortOrder": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 8,
+              "optional": true
+            },
+            "durationSeconds": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 300,
+              "optional": true
+            }
+          },
+          "required": [
+            "mime",
+            "size",
+            "kind"
+          ],
+          "constraints": [
+            "MIME_KIND_MISMATCH",
+            "MEDIA_INVALID"
+          ]
+        }
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/memories/today",
+      "module": "feed",
+      "auth": "bearer",
+      "status": [],
+      "query": {
+        "name": "memoriesTodayQuerySchema",
+        "origin": "dto",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "date": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+              "refined": true
+            }
+          },
+          "required": [
+            "date"
+          ],
+          "constraints": [
+            "INVALID_DATE"
+          ]
+        }
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/moments/:id",
+      "module": "moments",
+      "auth": "bearer",
+      "status": [
+        204
+      ],
+      "comment": "按资源 id 反查链的读/写接口：service 层调 ChainPolicy.require（CONVENTIONS §3.1）"
+    },
+    {
+      "method": "GET",
+      "path": "/api/moments/:id",
+      "module": "moments",
+      "auth": "bearer",
+      "status": [],
+      "comment": "按资源 id 反查链的读/写接口：service 层调 ChainPolicy.require（CONVENTIONS §3.1）"
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/moments/:id",
+      "module": "moments",
+      "auth": "bearer",
+      "status": [],
+      "comment": "按资源 id 反查链的读/写接口：service 层调 ChainPolicy.require（CONVENTIONS §3.1）",
+      "body": {
+        "name": "patchMomentInputSchema",
+        "origin": "dto",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "chainId": {
+              "type": "string",
+              "format": "uuid",
+              "optional": true
+            },
+            "content": {
+              "type": "string",
+              "maxLength": 5000,
+              "optional": true
+            },
+            "happenedAt": {
+              "type": "string",
+              "minLength": 1,
+              "optional": true,
+              "refined": true
+            },
+            "happenedTzOffset": {
+              "type": "integer",
+              "minimum": -840,
+              "maximum": 840,
+              "optional": true
+            },
+            "isBackfill": {
+              "type": "boolean",
+              "optional": true
+            },
+            "tagIds": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "maxItems": 20,
+              "optional": true
+            },
+            "personIds": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "maxItems": 20,
+              "optional": true
+            },
+            "place": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 255,
+                  "optional": true
+                },
+                "lat": {
+                  "type": "number",
+                  "minimum": -90,
+                  "maximum": 90,
+                  "optional": true
+                },
+                "lng": {
+                  "type": "number",
+                  "minimum": -180,
+                  "maximum": 180,
+                  "optional": true
+                }
+              },
+              "additionalProperties": false,
+              "optional": true,
+              "nullable": true,
+              "refined": true
+            },
+            "kind": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9-]*$",
+              "maxLength": 64,
+              "optional": true
+            },
+            "payload": {
+              "type": "object",
+              "additionalProperties": {},
+              "optional": true,
+              "nullable": true
+            },
+            "mediaIds": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "optional": true
+            },
+            "posterMediaId": {
+              "type": "string",
+              "format": "uuid",
+              "optional": true,
+              "nullable": true
+            }
+          },
+          "additionalProperties": false,
+          "constraints": [
+            "MEDIA_COUNT_INVALID",
+            "EMPTY_PATCH"
+          ]
+        }
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/moments/:id/comments",
+      "module": "social",
+      "auth": "bearer",
+      "status": [],
+      "comment": "按 moment id 反查链：service 层 ChainPolicy（CONVENTIONS §3.1）。viewer 即可评论/读取（spec §1）。",
+      "query": {
+        "name": "query",
+        "origin": "decorator",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "cursor": {
+              "type": "string",
+              "optional": true
+            },
+            "limit": {
+              "type": "string",
+              "optional": true
+            }
+          }
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/api/moments/:id/comments",
+      "module": "social",
+      "auth": "bearer",
+      "status": [
+        201
+      ],
+      "comment": "按 moment id 反查链：service 层 ChainPolicy（CONVENTIONS §3.1）。viewer 即可评论/读取（spec §1）。",
+      "body": {
+        "name": "createCommentInputSchema",
+        "origin": "dto",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "content": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 1000
+            }
+          },
+          "required": [
+            "content"
+          ]
+        }
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/moments/:id/reaction",
+      "module": "social",
+      "auth": "bearer",
+      "status": [
+        204
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/api/moments/:id/reaction",
+      "module": "social",
+      "auth": "bearer",
+      "status": [
+        204
+      ],
+      "body": {
+        "name": "reactionInputSchema",
+        "origin": "dto",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "emoji": {
+              "type": "string",
+              "enum": [
+                "👍",
+                "❤️",
+                "😂",
+                "😮",
+                "😢",
+                "🎉",
+                "🥰",
+                "👏",
+                "💪",
+                "🙏"
+              ]
+            }
+          },
+          "required": [
+            "emoji"
+          ]
+        }
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/notifications",
+      "module": "account",
+      "auth": "bearer",
+      "status": [],
+      "query": {
+        "name": "query",
+        "origin": "decorator",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "unread": {
+              "type": "string",
+              "optional": true
+            },
+            "cursor": {
+              "type": "string",
+              "optional": true
+            },
+            "limit": {
+              "type": "string",
+              "optional": true
+            }
+          }
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/api/notifications/read",
+      "module": "account",
+      "auth": "bearer",
+      "status": [
+        204
+      ],
+      "body": {
+        "name": "markNotificationsReadSchema",
+        "origin": "dto",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "ids": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "minItems": 1,
+              "maxItems": 100
+            }
+          },
+          "required": [
+            "ids"
+          ]
+        }
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/public/share/:token",
+      "module": "share",
+      "auth": "none",
+      "status": [],
+      "comment": "匿名公开端点（spec §4 Public）：不挂 @Authorized，无任何写操作。",
+      "query": {
+        "name": "publicShareQuerySchema",
+        "origin": "dto",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "cursor": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 1024,
+              "optional": true
+            },
+            "limit": {
+              "type": "integer",
+              "coerced": true,
+              "minimum": 1,
+              "maximum": 50,
+              "optional": true,
+              "default": 20
+            }
+          }
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/api/search",
+      "module": "search",
+      "auth": "bearer",
+      "status": [],
+      "body": {
+        "name": "searchInputSchema",
+        "origin": "dto",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "q": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 500
+            },
+            "chainIds": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "optional": true
+            },
+            "tzOffset": {
+              "type": "integer",
+              "minimum": -840,
+              "maximum": 840
+            },
+            "cursor": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 1024,
+              "optional": true
+            },
+            "limit": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 50,
+              "optional": true
+            },
+            "personId": {
+              "type": "string",
+              "format": "uuid",
+              "optional": true
+            },
+            "tagId": {
+              "type": "string",
+              "format": "uuid",
+              "optional": true
+            },
+            "place": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 255,
+              "optional": true
+            },
+            "happenedFrom": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}(:\\d{2})?(\\.\\d+)?(Z|[+-]\\d{2}:?\\d{2})$",
+              "optional": true,
+              "refined": true
+            },
+            "happenedTo": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}(:\\d{2})?(\\.\\d+)?(Z|[+-]\\d{2}:?\\d{2})$",
+              "optional": true,
+              "refined": true
+            }
+          },
+          "required": [
+            "q",
+            "tzOffset"
+          ],
+          "constraints": [
+            "VALIDATION_ERROR"
+          ]
+        }
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/share-links/:id",
+      "module": "share",
+      "auth": "bearer",
+      "status": [
+        204
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/tags/:id",
+      "module": "people",
+      "auth": "bearer",
+      "status": [
+        204
+      ],
+      "comment": "非嵌套路由，chainId 由 service 反查，角色校验在 service 层 ChainPolicy（CONVENTIONS §3.1）。"
+    },
+    {
+      "method": "GET",
+      "path": "/api/templates",
+      "module": "templates",
+      "auth": "bearer",
+      "status": [],
+      "query": {
+        "name": "listQuerySchema",
+        "origin": "local",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "scope": {
+              "type": "string",
+              "enum": [
+                "official",
+                "user"
+              ],
+              "optional": true
+            }
+          }
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/api/templates",
+      "module": "templates",
+      "auth": "bearer",
+      "status": [
+        201
+      ],
+      "body": {
+        "name": "createTemplateInputSchema",
+        "origin": "dto",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 50
+            },
+            "description": {
+              "type": "string",
+              "maxLength": 500,
+              "optional": true,
+              "nullable": true
+            },
+            "icon": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 50
+            },
+            "manifest": {
+              "type": "object",
+              "additionalProperties": {}
+            }
+          },
+          "required": [
+            "name",
+            "icon",
+            "manifest"
+          ]
+        }
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/templates/:key",
+      "module": "templates",
+      "auth": "bearer",
+      "status": [
+        204
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/templates/:key",
+      "module": "templates",
+      "auth": "bearer",
+      "status": []
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/templates/:key",
+      "module": "templates",
+      "auth": "bearer",
+      "status": [],
+      "body": {
+        "name": "updateTemplateInputSchema",
+        "origin": "dto",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 50,
+              "optional": true
+            },
+            "description": {
+              "type": "string",
+              "maxLength": 500,
+              "optional": true,
+              "nullable": true
+            },
+            "icon": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 50,
+              "optional": true
+            },
+            "manifest": {
+              "type": "object",
+              "additionalProperties": {},
+              "optional": true
+            }
+          },
+          "constraints": [
+            "at least one field required"
+          ]
+        }
+      }
+    }
+  ]
+}

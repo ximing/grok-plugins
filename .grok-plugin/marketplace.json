@@ -88,6 +88,27 @@
         "vital.aimo.plus"
       ],
       "version": "0.1.0"
+    },
+    {
+      "name": "moment",
+      "description": "Moment skill for coding agents: record chains, moments, feed, media, share links, and monthly recaps over HTTP with a personal access token.",
+      "category": "development",
+      "source": {
+        "type": "local",
+        "path": "./plugins/moment"
+      },
+      "homepage": "https://github.com/ximing/moment",
+      "keywords": [
+        "moment",
+        "moment skill",
+        "timeline",
+        "family",
+        "recaps"
+      ],
+      "domains": [
+        "moment.aimo.plus"
+      ],
+      "version": "0.1.0"
     }
   ]
 }

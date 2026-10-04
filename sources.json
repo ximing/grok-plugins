@@ -43,6 +43,15 @@
       "homepage": "https://github.com/ximing/vital",
       "keywords": ["vital", "vital skill", "inbox", "tasks", "habits"],
       "domains": ["vital.aimo.plus"]
+    },
+    {
+      "name": "moment",
+      "repo": "ximing/moment",
+      "ref": "main",
+      "category": "development",
+      "homepage": "https://github.com/ximing/moment",
+      "keywords": ["moment", "moment skill", "timeline", "family", "recaps"],
+      "domains": ["moment.aimo.plus"]
     }
   ]
 }
