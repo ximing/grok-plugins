@@ -109,6 +109,26 @@
         "moment.aimo.plus"
       ],
       "version": "0.1.0"
+    },
+    {
+      "name": "agent-recall",
+      "description": "agent-recall skill for coding agents: write a short project-memory block into a target repo's CLAUDE.md and AGENTS.md so later sessions keep decisions in agent-recall.",
+      "category": "development",
+      "source": {
+        "type": "local",
+        "path": "./plugins/agent-recall"
+      },
+      "homepage": "https://github.com/ximing/agent-recall",
+      "keywords": [
+        "agent-recall",
+        "agent-recall-init",
+        "memory",
+        "recall"
+      ],
+      "domains": [
+        "recall.aimo.plus"
+      ],
+      "version": "0.1.0"
     }
   ]
 }

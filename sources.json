@@ -52,6 +52,15 @@
       "homepage": "https://github.com/ximing/moment",
       "keywords": ["moment", "moment skill", "timeline", "family", "recaps"],
       "domains": ["moment.aimo.plus"]
+    },
+    {
+      "name": "agent-recall",
+      "repo": "ximing/agent-recall",
+      "ref": "main",
+      "category": "development",
+      "homepage": "https://github.com/ximing/agent-recall",
+      "keywords": ["agent-recall", "agent-recall-init", "memory", "recall"],
+      "domains": ["recall.aimo.plus"]
     }
   ]
 }

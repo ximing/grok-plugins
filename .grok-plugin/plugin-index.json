@@ -1,6 +1,18 @@
 {
   "version": 1,
   "plugins": {
+    "agent-recall": {
+      "sha": "4905eb1dba930509c5626107738bd4e6535ca0d3",
+      "version": "0.1.0",
+      "components": {
+        "skills": [
+          {
+            "name": "agent-recall-init",
+            "description": "Initialize a target git repository so its coding agents keep project memory in agent-recall. Writes one block under 60…"
+          }
+        ]
+      }
+    },
     "csi": {
       "sha": "18c105a78d8d855dd17e52808617b4859403a9f5",
       "version": "0.9.0",

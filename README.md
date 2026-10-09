@@ -11,6 +11,7 @@ Skills are **vendored** here from their source repositories. You do not edit fil
 | `inwit` | [ximing/inwit](https://github.com/ximing/inwit) | `inwit` |
 | `vital` | [ximing/vital](https://github.com/ximing/vital) | `vital` |
 | `moment` | [ximing/moment](https://github.com/ximing/moment) | `moment` |
+| `agent-recall` | [ximing/agent-recall](https://github.com/ximing/agent-recall) | `agent-recall-init` |
 
 ## Install
 
@@ -21,6 +22,7 @@ grok plugin install csi --trust
 grok plugin install inwit --trust
 grok plugin install vital --trust
 grok plugin install moment --trust
+grok plugin install agent-recall --trust
 ```
 
 Or pin it in `~/.grok/config.toml`:
@@ -31,7 +33,7 @@ name = "ximing"
 git = "https://github.com/ximing/grok-plugins.git"
 
 [plugins]
-enabled = ["rab", "csi", "inwit", "vital", "moment"]
+enabled = ["rab", "csi", "inwit", "vital", "moment", "agent-recall"]
 ```
 
 Then `grok plugin marketplace update` / `grok plugin update` picks up new skill copies.
@@ -44,6 +46,7 @@ ximing/csi    --skills change-->  GitHub Action  --deploy key-->  this repo
 ximing/inwit  --skills change-->  GitHub Action  --deploy key-->  this repo
 ximing/vital  --skills change-->  GitHub Action  --deploy key-->  this repo
 ximing/moment --skills change-->  GitHub Action  --deploy key-->  this repo
+ximing/agent-recall --skills change-->  GitHub Action  --deploy key-->  this repo
 this repo     --every 30 min--->  scripts/sync.py clones upstreams (safety net)
 ```
 
@@ -64,7 +67,7 @@ this repo     --every 30 min--->  scripts/sync.py clones upstreams (safety net)
 Local dry-run from this checkout:
 
 ```bash
-python3 scripts/sync.py --local-map rab=~/project/mygithub/rab,csi=~/project/mygithub/csi,inwit=~/project/mygithub/inwit,vital=~/project/mygithub/vital,moment=~/project/mygithub/moment
+python3 scripts/sync.py --local-map rab=~/project/mygithub/rab,csi=~/project/mygithub/csi,inwit=~/project/mygithub/inwit,vital=~/project/mygithub/vital,moment=~/project/mygithub/moment,agent-recall=~/project/mygithub/agent-recall
 python3 scripts/validate.py
 ```
 
@@ -81,6 +84,7 @@ plugins/csi/                 # generated
 plugins/inwit/               # generated
 plugins/vital/               # generated
 plugins/moment/              # generated
+plugins/agent-recall/        # generated
 ```
 
-Vendored plugin payloads keep their upstream license (`plugins/rab` is MIT, `plugins/csi` is PolyForm Noncommercial, `plugins/inwit` is AGPL-3.0). `plugins/vital` and `plugins/moment` have no `LICENSE` file because their upstream repos do not ship one. The scaffolding in this repository is MIT.
+Vendored plugin payloads keep their upstream license (`plugins/rab` is MIT, `plugins/csi` is PolyForm Noncommercial, `plugins/inwit` is AGPL-3.0). `plugins/vital`, `plugins/moment`, and `plugins/agent-recall` have no `LICENSE` file because their upstream repos do not ship one. The scaffolding in this repository is MIT.
