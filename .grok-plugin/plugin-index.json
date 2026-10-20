@@ -30,7 +30,7 @@
       }
     },
     "inwit": {
-      "sha": "81233b77cd4c2ae5297bd48d60f9f8f3535eb6cd",
+      "sha": "4309801d0e6e21e62b9c256ee3f502dd78baca9b",
       "version": "0.1.3",
       "components": {
         "skills": [
@@ -74,7 +74,7 @@
       }
     },
     "vital": {
-      "sha": "8d8f0ebf75a9b31bbf0e48bdd49b2966eb35b08f",
+      "sha": "fdcb128be9ea8e534b21a9757d88c2ddbabbe4d5",
       "version": "0.1.0",
       "components": {
         "skills": [
