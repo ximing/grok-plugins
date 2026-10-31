@@ -54,7 +54,7 @@
       }
     },
     "rab": {
-      "sha": "8bfdd0bc1bcd46a71baee0a07890dae3674be897",
+      "sha": "18d5dd2e7777f3dbc5886cb90964ae65d73dbb55",
       "version": "9.0.0",
       "components": {
         "skills": [
@@ -74,7 +74,7 @@
       }
     },
     "vital": {
-      "sha": "90f6932d44971288f582f3e7d782ff78a4793ef1",
+      "sha": "a3794664e97483c55fb7f63a0dca9a1a3cf3235a",
       "version": "0.1.0",
       "components": {
         "skills": [
