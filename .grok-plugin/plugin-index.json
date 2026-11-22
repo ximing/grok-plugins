@@ -2,7 +2,7 @@
   "version": 1,
   "plugins": {
     "agent-recall": {
-      "sha": "81f6752b796da3fbe35d31d26338f4beeb4d5d6e",
+      "sha": "1640d719b7ed8b4080adeef29feb4a97702798b0",
       "version": "0.1.0",
       "components": {
         "skills": [
